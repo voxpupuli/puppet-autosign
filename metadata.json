@@ -1,12 +1,12 @@
 {
-  "name": "danieldreier-autosign",
+  "name": "voxpupuli-autosign",
   "version": "0.4.0",
-  "author": "danieldreier",
+  "author": "Vox Pupuli",
   "summary": "Manage certificate autosigning using the autosign gem",
   "license": "Apache-2.0",
-  "source": "https://github.com/danieldreier/puppet-autosign",
-  "project_page": "https://github.com/danieldreier/puppet-autosign",
-  "issues_url": "https://github.com/danieldreier/puppet-autosign/issues",
+  "source": "https://github.com/voxpupuli/puppet-autosign",
+  "project_page": "https://github.com/voxpupuli/puppet-autosign",
+  "issues_url": "https://github.com/voxpupuli/puppet-autosign/issues",
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
