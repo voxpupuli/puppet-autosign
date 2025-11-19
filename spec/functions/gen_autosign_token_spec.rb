@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 # accept a hostname and return a JSON web token, which is three base64
