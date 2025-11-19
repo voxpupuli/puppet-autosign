@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 shared_examples_for 'base case' do
@@ -35,7 +37,7 @@ describe 'autosign' do
           }
         end
 
-        if ['FreeBSD', 'OpenBSD'].include?(os_facts[:osfamily])
+        if %w[FreeBSD OpenBSD].include?(os_facts[:osfamily])
           base_configpath = '/usr/local/etc'
           base_journalpath = '/var/autosign'
         else
@@ -46,15 +48,17 @@ describe 'autosign' do
         it_behaves_like 'base case'
 
         it do
-          is_expected.to contain_package('autosign via puppet_gem')
-            .with('ensure' => 'latest',
-                  'source' => 'https://rubygems.org')
+          is_expected.to contain_package('autosign via puppet_gem').
+            with('ensure' => 'latest',
+                 'source' => 'https://rubygems.org')
         end
+
         it do
-          is_expected.to contain_package('autosign via puppetserver_gem')
-            .with('ensure' => 'latest',
-                  'source' => 'https://rubygems.org')
+          is_expected.to contain_package('autosign via puppetserver_gem').
+            with('ensure' => 'latest',
+                 'source' => 'https://rubygems.org')
         end
+
         it { is_expected.to contain_file("#{base_configpath}/autosign.conf").with_ensure('file') }
         it { is_expected.to contain_file("#{base_journalpath}/autosign.journal").with_ensure('file') }
         it { is_expected.to contain_file('/var/log/autosign.log').with_ensure('file') }

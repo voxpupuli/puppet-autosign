@@ -4,7 +4,7 @@
 # It sets variables according to platform.
 #
 class autosign::params {
-  case $facts['os']['family'] {
+  case $::facts['os']['family'] {
     'Debian', 'Ubuntu': {
       $package_name     = 'autosign'
       $base_configpath  = '/etc'
@@ -25,7 +25,7 @@ class autosign::params {
     }
   }
 
-  $version = pick($facts['pe_server_version'], $facts['pe_build'], $puppetversion)
+  $version = pick($::facts['pe_server_version'], $::facts['pe_build'], $::facts['puppetversion'])
   case $version {
     /^\d{4}\.\d+\.\d+$/: {
       # Puppet enterprise versionsing: 20xx.y.z
@@ -57,18 +57,18 @@ class autosign::params {
   $manage_logfile     = true
   $manage_package     = true
   $config             = Sensitive.new({
-      'general'   => {
-        'loglevel' => 'INFO',
-        'logfile'  => "${logpath}/autosign.log",
-      },
-      'jwt_token' => {
-        'validity'    => 7200,
-        'journalfile' => "${journalpath}/autosign.journal",
-        # THIS IS NOT SECURE! It is marginally better than harcoding a password,
-        # but it can be replicated externaly to the Puppet Master.
-        # Please override this. It will also cause multi-master setups to not work
-        # correctly, all the more reason to override it.
-        'secret'      => fqdn_rand_string(30),
-      },
+    'general'   => {
+      'loglevel' => 'INFO',
+      'logfile'  => "${logpath}/autosign.log",
+    },
+    'jwt_token' => {
+      'validity'    => 7200,
+      'journalfile' => "${journalpath}/autosign.journal",
+      # THIS IS NOT SECURE! It is marginally better than harcoding a password,
+      # but it can be replicated externaly to the Puppet Master.
+      # Please override this. It will also cause multi-master setups to not work
+      # correctly, all the more reason to override it.
+      'secret'      => fqdn_rand_string(30),
+    },
   })
 }

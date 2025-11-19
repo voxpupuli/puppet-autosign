@@ -147,9 +147,7 @@ Users wishing to generate tokens this way should run the task against the Puppet
 `manage_logfile`: Weather or not to manage the logfile
 
 `config`: Hash of config to use.  This can optionally be a Sensitive type as well but you must wrap the entire hash in Sensitive.  `Sensitive.new({config goes here})`.  The config will by default always be
-redacted even if not passing in Sensitive value. 
-
-
+redacted even if not passing in Sensitive value.
 ## Development
 
 Contributions are welcome. New functionality must have passing rspec test

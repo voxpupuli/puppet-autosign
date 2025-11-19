@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # @summary
 #    Generate a JWT autosign token for use with the autosign gem's
 #    autosign policy executable.
@@ -61,7 +63,7 @@ Puppet::Functions.create_function(:'autosign::gen_autosign_token') do
 
     if jwt_secret.nil?
       raise(Puppet::ParseError, 'autosign::gen_autosign_token(): cannot generate token. ' \
-            'No secret provided in /etc/autosign.conf or JWT_TOKEN_SECRET env variable')
+                                'No secret provided in /etc/autosign.conf or JWT_TOKEN_SECRET env variable')
     end
 
     token = Autosign::Token.new(certname, false, jwt_token_validity.to_i, Socket.gethostname.to_s, jwt_secret)

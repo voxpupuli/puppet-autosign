@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Puppet::Parser::Functions
   newfunction(:gen_autosign_token, type: :rvalue, doc: <<-EOS
     Generate a JWT autosign token for use with the autosign gem's
@@ -8,8 +10,8 @@ module Puppet::Parser::Functions
     autosign.conf.
 
     This function is deprecated, please use autosign::gen_autosign_token().
-    EOS
-             ) do |arguments|
+  EOS
+  ) do |arguments|
     Puppet.warning('gen_autosign_token() is deprecated and will be removed in next release, please use the autosign::gen_autosign_token() instead')
     begin
       require 'autosign'
@@ -27,11 +29,12 @@ module Puppet::Parser::Functions
     when 1
       jwt_token_validity = config.settings['jwt_token']['validity']
     when 2
-      raise(Puppet::ParseError, 'gen_autosign_token(): second argument must be a positive integer') unless arguments[1].to_i > 0
+      raise(Puppet::ParseError, 'gen_autosign_token(): second argument must be a positive integer') unless arguments[1].to_i.positive?
+
       jwt_token_validity = arguments[1].to_i
     else
       raise(Puppet::ParseError, 'gen_autosign_token(): Wrong number of arguments ' \
-      "given (#{arguments.size} for 1 or 2)")
+                                "given (#{arguments.size} for 1 or 2)")
     end
 
     jwt_secret = ENV['JWT_TOKEN_SECRET'] unless ENV['JWT_TOKEN_SECRET'].nil?
@@ -39,7 +42,7 @@ module Puppet::Parser::Functions
 
     if jwt_secret.nil?
       raise(Puppet::ParseError, 'gen_autosign_token(): cannot generate token. ' \
-            'No secret provided in /etc/autosign.conf or JWT_TOKEN_SECRET env variable')
+                                'No secret provided in /etc/autosign.conf or JWT_TOKEN_SECRET env variable')
     end
 
     token = Autosign::Token.new(arguments[0].to_s, false, jwt_token_validity.to_i, Socket.gethostname.to_s, jwt_secret)
