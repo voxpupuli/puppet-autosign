@@ -1,0 +1,5 @@
+---
+# OS family defaults for FreeBSD and OpenBSD
+autosign::base_configpath: '/usr/local/etc'
+autosign::journalpath: '/var/autosign'
+

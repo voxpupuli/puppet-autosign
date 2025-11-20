@@ -6,10 +6,7 @@
 
 ### Classes
 
-* [`autosign`](#autosign): Installs and configures the autosign gem.
-* [`autosign::config`](#autosign--config): == Class autosign::config  This class is called from autosign for service config.
-* [`autosign::install`](#autosign--install): == Class autosign::install  This class is called from autosign for install.
-* [`autosign::params`](#autosign--params): == Class autosign::params  This class is meant to be called from autosign. It sets variables according to platform.
+* [`autosign`](#autosign)
 
 ### Functions
 
@@ -29,173 +26,141 @@ autosign.conf.
 
 ### <a name="autosign"></a>`autosign`
 
-Autosign Class.
-
-Implements the `autosign` gem to allow automated signing of certificates
-
-#### Examples
-
-##### Declaring the class
-
-```puppet
-class { autosign:
-  ensure   => 'latest',
-  settings => {
-    'general' => {
-      'loglevel' => 'INFO',
-    },
-    'jwt_token' => {
-      'secret'   => 'hunter2'
-      'validity' => '7200',
-    }
-  },
-}
-```
+The autosign class.
 
 #### Parameters
 
 The following parameters are available in the `autosign` class:
 
-* [`package_name`](#-autosign--package_name)
+* [`jwt_token_secret`](#-autosign--jwt_token_secret)
 * [`ensure`](#-autosign--ensure)
+* [`package_name`](#-autosign--package_name)
 * [`puppetserver_ensure`](#-autosign--puppetserver_ensure)
-* [`gem_source`](#-autosign--gem_source)
-* [`configfile`](#-autosign--configfile)
-* [`user`](#-autosign--user)
-* [`group`](#-autosign--group)
-* [`journalpath`](#-autosign--journalpath)
-* [`gem_provider`](#-autosign--gem_provider)
 * [`manage_journalfile`](#-autosign--manage_journalfile)
 * [`manage_logfile`](#-autosign--manage_logfile)
 * [`manage_package`](#-autosign--manage_package)
+* [`journalpath`](#-autosign--journalpath)
+* [`configfile`](#-autosign--configfile)
+* [`logpath`](#-autosign--logpath)
+* [`user`](#-autosign--user)
+* [`group`](#-autosign--group)
+* [`gem_provider`](#-autosign--gem_provider)
+* [`gem_source`](#-autosign--gem_source)
+* [`log_level`](#-autosign--log_level)
+* [`jwt_token_validity`](#-autosign--jwt_token_validity)
 * [`config`](#-autosign--config)
 
-##### <a name="-autosign--package_name"></a>`package_name`
+##### <a name="-autosign--jwt_token_secret"></a>`jwt_token_secret`
 
-Data type: `String`
+Data type: `Sensitive[String]`
 
-Name of the gem to install. Defaults to "autosign" and
-there's probably no reason to override it.
+The secret to use for the JWT token.
 
-Default value: `$autosign::params::package_name`
+Default value: `Sensitive(fqdn_rand_string(30))`
 
 ##### <a name="-autosign--ensure"></a>`ensure`
 
 Data type: `String`
 
-Ensure parameter on the package to install. Set to "present",
-"latest", "absent", or a specific gem version.
 
-Default value: `$autosign::params::ensure`
+
+##### <a name="-autosign--package_name"></a>`package_name`
+
+Data type: `String`
+
+
 
 ##### <a name="-autosign--puppetserver_ensure"></a>`puppetserver_ensure`
 
 Data type: `String`
 
-The ensure parameter for puppetserver gem
 
-Default value: `'present'`
-
-##### <a name="-autosign--gem_source"></a>`gem_source`
-
-Data type: `Optional[String]`
-
-Optional gem source
-
-Default value: `undef`
-
-##### <a name="-autosign--configfile"></a>`configfile`
-
-Data type: `Stdlib::Absolutepath`
-
-Path to the config file
-
-Default value: `$autosign::params::configfile`
-
-##### <a name="-autosign--user"></a>`user`
-
-Data type: `String`
-
-User that should own the files, this should be user that the
-Puppet server runs as.
-
-Default value: `$autosign::params::user`
-
-##### <a name="-autosign--group"></a>`group`
-
-Data type: `String`
-
-Group that should own the config files
-
-Default value: `$autosign::params::group`
-
-##### <a name="-autosign--journalpath"></a>`journalpath`
-
-Data type: `Stdlib::Absolutepath`
-
-Path to the journalfile, this will be managed as a
-directory, with the journalfile placed under it.
-
-Default value: `$autosign::params::journalpath`
-
-##### <a name="-autosign--gem_provider"></a>`gem_provider`
-
-Data type: `String`
-
-Provide to use to the gem.
-
-Default value: `$autosign::params::gem_provider`
 
 ##### <a name="-autosign--manage_journalfile"></a>`manage_journalfile`
 
 Data type: `Boolean`
 
-Weather or not to manage the journalfile
 
-Default value: `$autosign::params::manage_journalfile`
 
 ##### <a name="-autosign--manage_logfile"></a>`manage_logfile`
 
 Data type: `Boolean`
 
-Weather or not to manage the logfile
 
-Default value: `$autosign::params::manage_logfile`
 
 ##### <a name="-autosign--manage_package"></a>`manage_package`
 
 Data type: `Boolean`
 
-Whether or not to manage the package
 
-Default value: `$autosign::params::manage_package`
+
+##### <a name="-autosign--journalpath"></a>`journalpath`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### <a name="-autosign--configfile"></a>`configfile`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### <a name="-autosign--logpath"></a>`logpath`
+
+Data type: `Stdlib::Absolutepath`
+
+
+
+##### <a name="-autosign--user"></a>`user`
+
+Data type: `String`
+
+
+
+##### <a name="-autosign--group"></a>`group`
+
+Data type: `String`
+
+
+
+##### <a name="-autosign--gem_provider"></a>`gem_provider`
+
+Data type: `String`
+
+
+
+##### <a name="-autosign--gem_source"></a>`gem_source`
+
+Data type: `Optional[String]`
+
+
+
+Default value: `undef`
+
+##### <a name="-autosign--log_level"></a>`log_level`
+
+Data type: `String`
+
+
+
+Default value: `'INFO'`
+
+##### <a name="-autosign--jwt_token_validity"></a>`jwt_token_validity`
+
+Data type: `Integer`
+
+
+
+Default value: `7200`
 
 ##### <a name="-autosign--config"></a>`config`
 
 Data type: `Variant[Sensitive[Hash], Hash]`
 
-Hash of setting to use.
+
 
 Default value: `{}`
-
-### <a name="autosign--config"></a>`autosign::config`
-
-== Class autosign::config
-
-This class is called from autosign for service config.
-
-### <a name="autosign--install"></a>`autosign::install`
-
-== Class autosign::install
-
-This class is called from autosign for install.
-
-### <a name="autosign--params"></a>`autosign::params`
-
-== Class autosign::params
-
-This class is meant to be called from autosign.
-It sets variables according to platform.
 
 ## Functions
 

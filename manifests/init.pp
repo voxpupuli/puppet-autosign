@@ -47,25 +47,108 @@
 # @param manage_package Whether or not to manage the package
 #
 # @param config Hash of setting to use.
+
+# @param log_level The log level to use.
+
+# @param jwt_token_validity The validity of the JWT token in seconds.
+
+# @param jwt_token_secret The secret to use for the JWT token.
 #
 class autosign (
-  String               $ensure              = $autosign::params::ensure,
-  String               $puppetserver_ensure = 'present',
-  Optional[String]     $gem_source          = undef,
-  String               $package_name        = $autosign::params::package_name,
-  Stdlib::Absolutepath $configfile          = $autosign::params::configfile,
-  String               $user                = $autosign::params::user,
-  String               $group               = $autosign::params::group,
-  Stdlib::Absolutepath $journalpath         = $autosign::params::journalpath,
-  String               $gem_provider        = $autosign::params::gem_provider,
-  Boolean              $manage_journalfile  = $autosign::params::manage_journalfile,
-  Boolean              $manage_logfile      = $autosign::params::manage_logfile,
-  Boolean              $manage_package      = $autosign::params::manage_package,
-  Variant[Sensitive[Hash], Hash] $config    = {},
-) inherits autosign::params {
-  contain autosign::install
-  contain autosign::config
+  String               $ensure,
+  String               $package_name,
+  String               $puppetserver_ensure,
+  Boolean              $manage_journalfile,
+  Boolean              $manage_logfile,
+  Boolean              $manage_package,
+  Stdlib::Absolutepath $journalpath,
+  Stdlib::Absolutepath $configfile,
+  Stdlib::Absolutepath $logpath,
+  String               $user,
+  String               $group,
+  String               $gem_provider,
+  Optional[String]     $gem_source           = undef,
+  String               $log_level            = 'INFO',
+  Integer              $jwt_token_validity   = 7200,
+  Sensitive[String]    $jwt_token_secret     = Sensitive(fqdn_rand_string(30)),
+  Variant[Sensitive[Hash], Hash] $config     = {},
+) {
+  # install the autosign gem
+  if $autosign::manage_package {
+    package { 'autosign via puppet_gem':
+      ensure   => $autosign::ensure,
+      name     => $autosign::package_name,
+      source   => $autosign::gem_source,
+      provider => $autosign::gem_provider,
+    }
+    package { 'autosign via puppetserver_gem':
+      ensure   => $autosign::puppetserver_ensure,
+      name     => $autosign::package_name,
+      source   => $autosign::gem_source,
+      provider => 'puppetserver_gem',
+    }
+  }
 
-  Class['autosign::install']
-  -> Class['autosign::config']
+  $dir_ensure = $autosign::ensure ? {
+    /(absent|purged)/ => 'absent',
+    default           => 'directory',
+  }
+
+  $config_ensure = $autosign::ensure ? {
+    /(absent|purged)/ => 'absent',
+    default           => 'file',
+  }
+
+  # Merge the default config with the user-provided config, unwrap before merging 
+  $settings             = Sensitive.new(deep_merge({
+    'general'   => {
+      'loglevel' => $autosign::log_level,
+      'logfile'  => "${autosign::logpath}/autosign.log",
+    },
+    'jwt_token' => {
+      'validity'    => $autosign::jwt_token_validity,
+      'journalfile' => "${autosign::journalpath}/autosign.journal",
+      # THIS IS NOT SECURE! It is marginally better than harcoding a password,
+      # but it can be replicated externaly to the Puppet Master.
+      # Please override this. It will also cause multi-master setups to not work
+      # correctly, all the more reason to override it.
+      'secret'      => $autosign::jwt_token_secret.unwrap,
+    },
+  }, $autosign::config.unwrap))
+
+  $sensitive_config = Sensitive(epp('autosign/autosign.conf.epp', { settings => $settings.unwrap }))
+
+  # Ensure we set the value to Sensitive so the secrets don't get revealed
+  file { $autosign::configfile:
+    ensure  => $config_ensure,
+    mode    => '0640',
+    content => $sensitive_config,
+    owner   => $autosign::user,
+    group   => $autosign::group,
+  }
+
+  if $autosign::manage_logfile {
+    file { $settings.unwrap['general']['logfile']:
+      ensure => 'file',
+      mode   => '0640',
+      owner  => $autosign::user,
+      group  => $autosign::group,
+    }
+  }
+  # the autosign key journal stores previously-used tokens to prevent re-use
+  if $autosign::manage_journalfile {
+    file { $autosign::journalpath:
+      ensure => $dir_ensure,
+      mode   => '0750',
+      owner  => $autosign::user,
+      group  => $autosign::group,
+    }
+    file { $settings.unwrap['jwt_token']['journalfile']:
+      ensure  => 'file',
+      mode    => '0640',
+      owner   => $autosign::user,
+      group   => $autosign::group,
+      require => File[$autosign::journalpath],
+    }
+  }
 }

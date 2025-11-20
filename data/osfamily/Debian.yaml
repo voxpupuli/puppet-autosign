@@ -1,0 +1,5 @@
+---
+# OS family defaults for Debian and Ubuntu
+autosign::base_configpath: '/etc'
+autosign::journalpath: '/var/lib/autosign'
+
