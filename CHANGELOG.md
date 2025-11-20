@@ -1,5 +1,13 @@
 ## Puppet Autosign Changelog
 
+## 0.5.0
+* Release before switch to voxpupuli
+* Support EL7-EL9
+* Support Puppet 7 and 8
+* Support stdlib 9.x
+* Use Voxpupuli Gemfile and some lint fixes
+* Use facts hash to avoid undefined variable errors
+
 ## 0.4.0
 * Fixes #2 - use puppetserver_gem when installing on JVM puppetserver
 * Fixes #17 - ${confdir} is not valid in Readme example
