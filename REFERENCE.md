@@ -64,11 +64,15 @@ Data type: `String`
 
 
 
+Default value: `'present'`
+
 ##### <a name="-autosign--package_name"></a>`package_name`
 
 Data type: `String`
 
 
+
+Default value: `'autosign'`
 
 ##### <a name="-autosign--puppetserver_ensure"></a>`puppetserver_ensure`
 
@@ -76,11 +80,15 @@ Data type: `String`
 
 
 
+Default value: `'present'`
+
 ##### <a name="-autosign--manage_journalfile"></a>`manage_journalfile`
 
 Data type: `Boolean`
 
 
+
+Default value: `true`
 
 ##### <a name="-autosign--manage_logfile"></a>`manage_logfile`
 
@@ -88,11 +96,15 @@ Data type: `Boolean`
 
 
 
+Default value: `true`
+
 ##### <a name="-autosign--manage_package"></a>`manage_package`
 
 Data type: `Boolean`
 
 
+
+Default value: `true`
 
 ##### <a name="-autosign--journalpath"></a>`journalpath`
 
@@ -100,11 +112,15 @@ Data type: `Stdlib::Absolutepath`
 
 
 
+Default value: `'/var/lib/autosign'`
+
 ##### <a name="-autosign--configfile"></a>`configfile`
 
 Data type: `Stdlib::Absolutepath`
 
 
+
+Default value: `'/etc/autosign.conf'`
 
 ##### <a name="-autosign--logpath"></a>`logpath`
 
@@ -112,11 +128,15 @@ Data type: `Stdlib::Absolutepath`
 
 
 
+Default value: `'/var/log'`
+
 ##### <a name="-autosign--user"></a>`user`
 
 Data type: `String`
 
 
+
+Default value: `'puppet'`
 
 ##### <a name="-autosign--group"></a>`group`
 
@@ -124,11 +144,15 @@ Data type: `String`
 
 
 
+Default value: `'puppet'`
+
 ##### <a name="-autosign--gem_provider"></a>`gem_provider`
 
 Data type: `String`
 
 
+
+Default value: `'puppet_gem'`
 
 ##### <a name="-autosign--gem_source"></a>`gem_source`
 

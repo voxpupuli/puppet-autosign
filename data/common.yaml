@@ -1,17 +1,19 @@
 ---
-# Common defaults for autosign module
-autosign::ensure: 'present'
-autosign::package_name: 'autosign'
-autosign::logpath: '/var/log'
-autosign::base_configpath: '/etc'
-autosign::journalpath: '/var/lib/autosign'
-autosign::gem_provider: 'puppet_gem'
-autosign::manage_journalfile: true
-autosign::manage_logfile: true
-autosign::manage_package: true
-autosign::log_level: 'INFO'
-autosign::jwt_token_validity: 7200
-autosign::puppetserver_ensure: 'present'
-autosign::user: 'puppet'
-autosign::group: 'puppet'
+# Common defaults for autosign module, override in your hiera data if needed
+# autosign::ensure: 'present'
+# autosign::package_name: 'autosign'
+# autosign::logpath: '/var/log'
+# autosign::base_configpath: '/etc'
+# autosign::journalpath: '/var/lib/autosign'
+# autosign::gem_provider: 'puppet_gem'
+# autosign::manage_journalfile: true
+# autosign::manage_logfile: true
+# autosign::manage_package: true
+# autosign::log_level: 'INFO'
+# autosign::jwt_token_validity: 7200
+# autosign::puppetserver_ensure: 'present'
+# autosign::user: 'puppet'
+# autosign::group: 'puppet'
+
+# required to be set in the hiera data since os family specific data will be interpolated.
 autosign::configfile: "%{lookup('autosign::base_configpath')}/autosign.conf"
