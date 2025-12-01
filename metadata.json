@@ -1,6 +1,6 @@
 {
   "name": "voxpupuli-autosign",
-  "version": "0.4.0",
+  "version": "0.6.0",
   "author": "Vox Pupuli",
   "summary": "Manage certificate autosigning using the autosign gem",
   "license": "Apache-2.0",

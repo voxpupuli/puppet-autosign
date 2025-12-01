@@ -1,21 +1,31 @@
-[![Build Status](https://travis-ci.org/danieldreier/puppet-autosign.svg?branch=master)](https://travis-ci.org/danieldreier/puppet-autosign) [![Puppet Forge](https://img.shields.io/puppetforge/dt/danieldreier/autosign.svg)](https://forge.puppetlabs.com/danieldreier/autosign) [![Puppet Forge](https://img.shields.io/puppetforge/v/danieldreier/autosign.svg)](https://forge.puppetlabs.com/danieldreier/autosign)
+[![Puppet Forge](https://img.shields.io/puppetforge/dt/voxpupuli/autosign.svg)](https://forge.puppetlabs.com/voxpupuli/autosign) [![Puppet Forge](https://img.shields.io/puppetforge/v/voxpupuli/autosign.svg)](https://forge.puppetlabs.com/voxpupuli/autosign)
+
+## Switch to Vox Pupuli (PLEASE READ)
+This module has recently moved to VoxPupuli and all further development will be handled by VoxPupuli contributors.  🎉
+
+Prior to this handover the code was tagged to `v0.4.0` with some outstanding changes that were never released to the forge.  These additional changes are now tagged to `v0.5.0` with an associated branch of `v0.5.0-branch`.
+
+- 👉 If you are dependent on the old forge module danieldrier-autosign use `v0.4.0`
+- 👉 If you are dependedent on the `v0.4.0` but want the recent unreleased updates use `v0.5.0`.
+- 👉 For the latest release of v0.5.0 with Post VoxPupuli integration use `v0.6.0`+
+- 👉 A future major release will bring a small breaking change, and will likely be a `v1.0.0` release
 
 ## Overview
 
-This module manages the [autosign gem](https://github.com/danieldreier/autosign), which facilitates [policy-based certificate signing](https://docs.puppetlabs.com/puppet/latest/reference/ssl_autosign.html#policy-based-autosigning) in Puppet.
+This module manages the [autosign gem](https://github.com/voxpupuli/autosign), which facilitates [policy-based certificate signing](https://docs.puppetlabs.com/puppet/latest/reference/ssl_autosign.html#policy-based-autosigning) in Puppet.
 
 ## Description
 
 This module:
 
-- installs and configures the [autosign gem](https://github.com/danieldreier/autosign)
+- installs and configures the [autosign gem](https://github.com/voxpupuli/autosign)
 - provides a puppet function to generate JWT tokens for autosigning, for example when provisioning VMs using Puppet
 
 ## Setup
 
 #### Install
 ```
-puppet module install danieldreier-autosign
+puppet module install voxpupuli-autosign
 ```
 
 ### What autosign affects
@@ -36,7 +46,7 @@ puppet module install danieldreier-autosign
 
 ### Setup Requirements
 
-This module does not configure puppet to do policy-based autosigning. See the [autosign gem](https://github.com/danieldreier/autosign#2-configure-master) or [puppet docs](https://docs.puppetlabs.com/puppet/latest/reference/ssl_autosign.html#policy-based-autosigning) for instructions on how to configure policy-based autosigning. In puppet, the configuration will probably look something like:
+This module does not configure puppet to do policy-based autosigning. See the [autosign gem](https://github.com/voxpupuli/autosign#2-configure-master) or [puppet docs](https://docs.puppetlabs.com/puppet/latest/reference/ssl_autosign.html#policy-based-autosigning) for instructions on how to configure policy-based autosigning. In puppet, the configuration will probably look something like:
 
 ```puppet
 ini_setting {'policy-based autosigning':
@@ -51,7 +61,8 @@ ini_setting {'policy-based autosigning':
 
 #### Install Module
 ```bash
-puppet module install danieldreier-autosign
+puppet module install danieldreier-autosign (legacy)
+puppet module install voxpupuli-autosign (New)
 ```
 
 #### Basic manifest
