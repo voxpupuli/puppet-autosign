@@ -1,5 +1,5 @@
 {
-  "name": "voxpupuli-autosign",
+  "name": "puppet-autosign",
   "version": "0.6.0",
   "author": "Vox Pupuli",
   "summary": "Manage certificate autosigning using the autosign gem",
