@@ -1,4 +1,15 @@
-[![Puppet Forge](https://img.shields.io/puppetforge/dt/voxpupuli/autosign.svg)](https://forge.puppetlabs.com/voxpupuli/autosign) [![Puppet Forge](https://img.shields.io/puppetforge/v/voxpupuli/autosign.svg)](https://forge.puppetlabs.com/voxpupuli/autosign)
+# puppet-autosign module
+
+[![Build Status](https://github.com/voxpupuli/puppet-autosign/workflows/CI/badge.svg)](https://github.com/voxpupuli/puppet-autosign/actions?query=workflow%3ACI)
+[![Release](https://github.com/voxpupuli/puppet-autosign/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/puppet-autosign/actions/workflows/release.yml)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/autosign.svg)](https://forge.puppetlabs.com/puppet/autosign)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/autosign.svg)](https://forge.puppetlabs.com/puppet/autosign)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/autosign.svg)](https://forge.puppetlabs.com/puppet/autosign)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/autosign.svg)](https://forge.puppetlabs.com/puppet/autosign)
+[![puppetmodule.info docs](https://www.puppetmodule.info/images/badge.svg)](https://www.puppetmodule.info/m/puppet-autosign)
+[![Apache-2 License](https://img.shields.io/github/license/voxpupuli/puppet-autosign.svg)](LICENSE)
+[![Donated by Corey Osman & Daniel Dreier](https://img.shields.io/badge/donated%20by-Corey%20Osman%20&%20Daniel%20Dreier-fb7047.svg)](#transfer-notice)
+
 
 ## Switch to Vox Pupuli (PLEASE READ)
 This module has recently moved to VoxPupuli and all further development will be handled by VoxPupuli contributors.  🎉
@@ -174,3 +185,9 @@ To contribute improvements, please fork this repository, create a feature
 branch off your fork, and add the code there. Once your tests pass locally,
 make a pull request and check that tests pass on CI, which probably tests a
 wider range of puppet and ruby versions than you have locally.
+
+# Transfer notice
+
+In the past, the module was maintained by Daniel Dreier and Corey Osman.
+The maintainers preferred that Vox Pupuli take ownership of the module for future improvement and maintenance.
+Existing pull requests and issues were transferred over, please fork and continue to contribute here.
