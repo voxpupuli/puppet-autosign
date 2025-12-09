@@ -68,7 +68,7 @@ class autosign::params {
       # but it can be replicated externaly to the Puppet Master.
       # Please override this. It will also cause multi-master setups to not work
       # correctly, all the more reason to override it.
-      'secret'      => fqdn_rand_string(30),
+      'secret'      => stdlib::fqdn_rand_string(30),
     },
   })
 }
