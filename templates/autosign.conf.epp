@@ -3,4 +3,4 @@ Hash $settings
 | -%>
 # autosign configuration is managed by Puppet
 # manual modifications to this file will be overrwitten
-<%= $settings.to_yaml %>
+<%= $settings.stdlib::to_yaml %>
