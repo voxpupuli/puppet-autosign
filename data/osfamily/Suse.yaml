@@ -1,5 +1,0 @@
----
-# OS family defaults for SLES and openSUSE
-autosign::base_configpath: '/etc'
-autosign::journalpath: '/var/lib/autosign'
-

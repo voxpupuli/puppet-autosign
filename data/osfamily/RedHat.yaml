@@ -1,5 +1,0 @@
----
-# OS family defaults for RedHat, Amazon, SLES, openSUSE, OracleLinux, and Fedora
-autosign::base_configpath: '/etc'
-autosign::journalpath: '/var/lib/autosign'
-

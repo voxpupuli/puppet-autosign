@@ -73,6 +73,7 @@ class autosign (
   Sensitive[String]     $jwt_token_secret    = Sensitive(fqdn_rand_string(30)),
   Variant[Sensitive[Hash], Hash] $config     = {},
 ) {
+
   # install the autosign gem
   if $autosign::manage_package {
     package { 'autosign via puppet_gem':
