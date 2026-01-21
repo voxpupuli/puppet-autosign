@@ -10,6 +10,8 @@ module Puppet::Parser::Functions
     autosign.conf.
 
     This function is deprecated, please use autosign::gen_autosign_token().
+
+    @return [String] The JWT autosign token value
   EOS
   ) do |arguments|
     Puppet.warning('gen_autosign_token() is deprecated and will be removed in next release, please use the autosign::gen_autosign_token() instead')

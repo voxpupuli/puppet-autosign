@@ -1,0 +1,8 @@
+---
+# Puppet Enterprise specific defaults
+autosign::user: 'pe-puppet'
+autosign::group: 'pe-puppet'
+autosign::logpath: '/var/log/puppetlabs/puppetserver'
+autosign::journalpath: '/opt/puppetlabs/server/autosign'
+autosign::base_configpath: '/etc/puppetlabs/puppetserver'
+autosign::configfile: '/etc/puppetlabs/puppetserver/autosign.conf'

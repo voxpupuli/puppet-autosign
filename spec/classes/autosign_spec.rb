@@ -4,10 +4,6 @@ require 'spec_helper'
 
 shared_examples_for 'base case' do
   it { is_expected.to compile.with_all_deps }
-
-  it { is_expected.to contain_class('autosign::params') }
-  it { is_expected.to contain_class('autosign::install').that_comes_before('Class[autosign::config]') }
-  it { is_expected.to contain_class('autosign::config') }
 end
 
 describe 'autosign' do
@@ -67,33 +63,53 @@ describe 'autosign' do
     end
   end
 
-  context 'unsupported operating system' do
-    describe 'autosign class without any parameters on Solaris/Nexenta' do
-      let(:facts) do
-        {
-          os: { family: 'Solaris', name: 'Nexenta' },
-        }
-      end
-
-      it { expect { is_expected.to contain_package('autosign via puppet_gem') }.to raise_error(Puppet::Error, %r{Nexenta not supported}) }
-    end
-  end
-
   context 'when running Puppet Enterprise' do
     on_supported_os.each do |os, os_facts|
       context "on #{os}" do
         let(:facts) do
-          os_facts.merge(pe_server_version: '2017.3.2')
+          os_facts.merge(is_pe: true, pe_server_version: '2017.3.2')
         end
         let(:params) { {} }
 
         it_behaves_like 'base case'
         it { is_expected.to contain_package('autosign via puppet_gem').with_ensure('present') }
         it { is_expected.to contain_package('autosign via puppetserver_gem').with_ensure('present') }
-        it { is_expected.to contain_file('/var/log/puppetlabs/puppetserver/autosign.log').with_ensure('file') }
-        it { is_expected.to contain_file('/etc/puppetlabs/puppetserver/autosign.conf').with_ensure('file') }
-        it { is_expected.to contain_file('/opt/puppetlabs/server/autosign/autosign.journal').with_ensure('file') }
-        it { is_expected.to contain_file('/opt/puppetlabs/server/autosign').with_ensure('directory') }
+
+        it {
+          is_expected.to contain_file('/var/log/puppetlabs/puppetserver/autosign.log').with(
+            'ensure' => 'file',
+            'owner' => 'pe-puppet',
+            'group' => 'pe-puppet',
+            'mode' => '0640'
+          )
+        }
+
+        it {
+          is_expected.to contain_file('/etc/puppetlabs/puppetserver/autosign.conf').with(
+            'ensure' => 'file',
+            'owner' => 'pe-puppet',
+            'group' => 'pe-puppet',
+            'mode' => '0640'
+          )
+        }
+
+        it {
+          is_expected.to contain_file('/opt/puppetlabs/server/autosign/autosign.journal').with(
+            'ensure' => 'file',
+            'owner' => 'pe-puppet',
+            'group' => 'pe-puppet',
+            'mode' => '0640'
+          )
+        }
+
+        it {
+          is_expected.to contain_file('/opt/puppetlabs/server/autosign').with(
+            'ensure' => 'directory',
+            'owner' => 'pe-puppet',
+            'group' => 'pe-puppet',
+            'mode' => '0750'
+          )
+        }
       end
     end
   end
