@@ -37,12 +37,16 @@
 #
 # @param journalpath Path to the journalfile, this will be managed as a
 #   directory, with the journalfile placed under it.
+#   The autosign journal file stores previously-used tokens to prevent their re-use.
+#
+# @param logpath Path to the directory where the logfile will be placed.
+#   The logfile will be created as "${logpath}/autosign.log".
 #
 # @param gem_provider Provide to use to the gem.
 #
-# @param manage_journalfile Weather or not to manage the journalfile
+# @param manage_journalfile Whether or not to manage the journalfile.
 #
-# @param manage_logfile Weather or not to manage the logfile
+# @param manage_logfile Whether or not to manage the logfile
 #
 # @param manage_package Whether or not to manage the package
 #
@@ -52,7 +56,9 @@
 
 # @param jwt_token_validity The validity of the JWT token in seconds.
 
-# @param jwt_token_secret The secret to use for the JWT token.
+# @param jwt_token_secret The secret to use for the JWT token.  
+#   The secret is used to sign the JWT token.
+#   It is stored in the config file and is used to verify the JWT token.
 #
 class autosign (
   String[1] $ensure = 'present',
@@ -70,10 +76,9 @@ class autosign (
   Optional[String] $gem_source = undef,
   String[1] $log_level = 'INFO',
   Integer $jwt_token_validity = 7200,
-  Sensitive[String[1]] $jwt_token_secret = Sensitive(fqdn_rand_string(30)),
+  Sensitive[String[30]] $jwt_token_secret = Sensitive(fqdn_rand_string(32)),
   Variant[Sensitive[Hash], Hash] $config = {},
 ) {
-
   # install the autosign gem
   if $autosign::manage_package {
     package { 'autosign via puppet_gem':
@@ -119,7 +124,6 @@ class autosign (
 
   $sensitive_config = Sensitive(epp('autosign/autosign.conf.epp', { settings => $settings.unwrap }))
 
-  # Ensure we set the value to Sensitive so the secrets don't get revealed
   file { $autosign::configfile:
     ensure  => $config_ensure,
     mode    => '0640',
@@ -136,7 +140,6 @@ class autosign (
       group  => $autosign::group,
     }
   }
-  # the autosign key journal stores previously-used tokens to prevent re-use
   if $autosign::manage_journalfile {
     file { $autosign::journalpath:
       ensure => $dir_ensure,
@@ -145,11 +148,10 @@ class autosign (
       group  => $autosign::group,
     }
     file { $settings.unwrap['jwt_token']['journalfile']:
-      ensure  => 'file',
-      mode    => '0640',
-      owner   => $autosign::user,
-      group   => $autosign::group,
-      require => File[$autosign::journalpath],
+      ensure => 'file',
+      mode   => '0640',
+      owner  => $autosign::user,
+      group  => $autosign::group,
     }
   }
 }

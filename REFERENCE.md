@@ -52,15 +52,17 @@ The following parameters are available in the `autosign` class:
 
 ##### <a name="-autosign--jwt_token_secret"></a>`jwt_token_secret`
 
-Data type: `Sensitive[String]`
+Data type: `Sensitive[String[30]]`
 
 The secret to use for the JWT token.
+The secret is used to sign the JWT token.
+It is stored in the config file and is used to verify the JWT token.
 
-Default value: `Sensitive(fqdn_rand_string(30))`
+Default value: `Sensitive(fqdn_rand_string(32))`
 
 ##### <a name="-autosign--ensure"></a>`ensure`
 
-Data type: `String`
+Data type: `String[1]`
 
 
 
@@ -68,7 +70,7 @@ Default value: `'present'`
 
 ##### <a name="-autosign--package_name"></a>`package_name`
 
-Data type: `String`
+Data type: `String[1]`
 
 
 
@@ -76,7 +78,7 @@ Default value: `'autosign'`
 
 ##### <a name="-autosign--puppetserver_ensure"></a>`puppetserver_ensure`
 
-Data type: `String`
+Data type: `String[1]`
 
 
 
@@ -132,7 +134,7 @@ Default value: `'/var/log'`
 
 ##### <a name="-autosign--user"></a>`user`
 
-Data type: `String`
+Data type: `String[1]`
 
 
 
@@ -140,7 +142,7 @@ Default value: `'puppet'`
 
 ##### <a name="-autosign--group"></a>`group`
 
-Data type: `String`
+Data type: `String[1]`
 
 
 
@@ -148,7 +150,7 @@ Default value: `'puppet'`
 
 ##### <a name="-autosign--gem_provider"></a>`gem_provider`
 
-Data type: `String`
+Data type: `String[1]`
 
 
 
@@ -164,7 +166,7 @@ Default value: `undef`
 
 ##### <a name="-autosign--log_level"></a>`log_level`
 
-Data type: `String`
+Data type: `String[1]`
 
 
 
@@ -276,7 +278,7 @@ autosign.conf.
 
 This function is deprecated, please use autosign::gen_autosign_token().
 
-Returns: `Any`
+Returns: `String` The JWT autosign token value
 
 ## Tasks
 
