@@ -48,15 +48,11 @@ describe 'autosign' do
         it_behaves_like 'base case'
 
         it do
-          is_expected.to contain_package('autosign via puppet_gem').
-            with('ensure' => 'latest',
-                 'source' => 'https://rubygems.org')
+          is_expected.to contain_package('autosign via puppet_gem').with('ensure' => 'latest', 'source' => 'https://rubygems.org')
         end
 
         it do
-          is_expected.to contain_package('autosign via puppetserver_gem').
-            with('ensure' => 'latest',
-                 'source' => 'https://rubygems.org')
+          is_expected.to contain_package('autosign via puppetserver_gem').with('ensure' => 'latest', 'source' => 'https://rubygems.org')
         end
 
         it { is_expected.to contain_file("#{base_configpath}/autosign.conf").with_ensure('file') }
