@@ -316,4 +316,3 @@ autosign token validity period in seconds (default: 7200)
 Data type: `String`
 
 Certname/regex of the newly created machine
-
